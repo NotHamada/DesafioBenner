@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Microondas";
+}
+
+@section scripts
+{
+    <script src="../../Scripts/module.js"></script>
+}
+
+<div class="container-fluid">
+    <h1 class="text-center" id="display">
+        00:00
+    </h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="timeInput">Tempo (segundos):</label>
+            <input class="form-control" type="number" id="timeInput" min="1" max="120">
+        </div>
+        <div class="col-md-6">
+            <label for="powerInput">Potência (1-10):</label>
+            <input class="form-control" type="number" id="powerInput" min="1" max="10" value="10">
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <button class="col-md-4 btn btn-success" onclick="addNumber(1)">1</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(2)">2</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(3)">3</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(4)">4</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(5)">5</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(6)">6</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(7)">7</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(8)">8</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(9)">9</button>
+        <button class="col-md-4 btn btn-success" onclick="clearInput()">C</button>
+        <button class="col-md-4 btn btn-success" onclick="addNumber(0)">0</button>
+        <button class="col-md-4 btn btn-success" onclick="startHeating()">Iniciar</button>
+    </div>
+
+    <div class="row">
+        <button onclick="quickStart()" class="col-md-12 btn btn-success">Início Rápido</button>
+        <button class="col-md-12 btn btn-danger mt-3" onclick="pauseOrCancel()">Pausar/Cancelar</button>
+    </div>
+
+    <div class="heating-progress" id="heatingProgress"></div>
+    <div class="status" id="status"></div>
+</div>
