@@ -1,11 +1,11 @@
 function fazerLogin() {
     $.ajax({
         url: '/api/login',
-        type: 'GET',
+        type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
-            username: "admin",
-            password: "123456"
+            Username: 'admin',
+            Password: '123456'
         }),
         success: function (response) {
             localStorage.setItem('jwt', response.token);

@@ -1,4 +1,5 @@
-﻿using DesafioBenner.WebApi.Models;
+﻿using DesafioBenner.Context;
+using DesafioBenner.WebApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web.Http;
 
@@ -15,18 +17,38 @@ namespace DesafioBenner.WebApi.Api
     public class LoginController : ApiController
     {
         private readonly string secretKey = "sua_chave_secreta_aqui";
+        private readonly DesafioContext db = new DesafioContext();
 
-        // POST api/values
+        // POST api/login
         public IHttpActionResult Post([FromBody] LoginModel model)
         {
+            var usuario = db.Usuarios.FirstOrDefault(q => q.Username == model.Username);
 
-            // Verifique as credenciais do usuário (exemplo simples)
-            if (model.Username == "usuario" && model.Password == "senha")
+            if (usuario != null)
             {
-                // Gere o token JWT
-                var token = GenerateJwtToken(model.Username);
+                var senha = "";
 
-                return Ok(new { Token = token });
+                using (SHA1 sha1 = SHA1.Create())
+                {
+                    byte[] inputBytes = Encoding.UTF8.GetBytes(usuario.Password);
+                    byte[] hashBytes = sha1.ComputeHash(inputBytes);
+
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < hashBytes.Length; i++)
+                    {
+                        sb.Append(hashBytes[i].ToString("x2"));
+                    }
+
+                    senha = sb.ToString();
+                }
+
+                if (model.Password == senha)
+                {
+                    // Gere o token JWT
+                    var token = GenerateJwtToken(model.Username);
+
+                    return Ok(new { Token = token });
+                }
             }
 
             return Unauthorized();
