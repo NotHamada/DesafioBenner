@@ -1,6 +1,6 @@
 ﻿using DesafioBenner.Context;
 using DesafioBenner.Domain.Configuracoes;
-using System.Collections.Generic;
+using DesafioBenner.WebApi.Models;
 using System.Linq;
 using System.Web.Http;
 
@@ -31,21 +31,31 @@ namespace DesafioBenner.WebApi.Api
 
         // POST api/configuracoes
         [HttpPost]
-        public IHttpActionResult Post([FromBody] Configuracao configuracao)
+        public IHttpActionResult Post([FromBody] ConfiguracaoModel model)
         {
-            if (configuracao == null)
+            if (model == null)
             {
                 return BadRequest("Configuração não pode ser nula.");
             }
 
             // Verificar se o símbolo já existe
-            if (db.Configuracoes.Any(c => c.Symbol == configuracao.Symbol))
+            if (db.Configuracoes.Any(c => c.Symbol == model.Symbol))
             {
                 return BadRequest("Símbolo já existe.");
             }
 
             // Atribuir um novo ID à configuração
-            configuracao.Id = db.Configuracoes.Count() + 1;
+            model.Id = db.Configuracoes.Count() + 1;
+
+            var configuracao = new Configuracao
+            {
+                Id = model.Id.Value,
+                Symbol = model.Symbol,
+                Name = model.Name,
+                Power = model.Power,
+                Time = model.Time,
+            };
+
             db.Configuracoes.Add(configuracao);
             db.SaveChanges();
 
@@ -59,6 +69,12 @@ namespace DesafioBenner.WebApi.Api
             if (configuracao == null)
             {
                 return BadRequest("Configuração não pode ser nula.");
+            }
+
+            // Verificar se o símbolo já existe
+            if (db.Configuracoes.Any(c => c.Symbol == configuracao.Symbol))
+            {
+                return BadRequest("Símbolo já existe.");
             }
 
             var existingConfiguracao = db.Configuracoes.FirstOrDefault(c => c.Id == id);

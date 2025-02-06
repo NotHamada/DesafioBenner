@@ -1,5 +1,6 @@
 ﻿using DesafioBenner.Context;
 using DesafioBenner.Domain.Usuarios;
+using DesafioBenner.WebApi.Models;
 using System;
 using System.Linq;
 using System.Web.Http;
@@ -25,21 +26,27 @@ namespace DesafioBenner.WebApi.Api
 
             // POST api/values
             [HttpPost]
-            public IHttpActionResult Post([FromBody] Usuario usuario)
+            public IHttpActionResult Post([FromBody] UsuarioModel model)
             {
-                if (usuario == null)
+                if (model == null)
                 {
                     return BadRequest("Usuario não pode ser nulo.");
                 }
 
                 // Verificar se o username já existe
-                if (db.Usuarios.Any(u => u.Username == usuario.Username))
+                if (db.Usuarios.Any(u => u.Username == model.Username))
                 {
                     return BadRequest("Username já existe.");
                 }
 
                 // Atribuir um novo ID ao usuário
-                usuario.Id = db.Usuarios.Count() + 1;
+                model.Id = db.Usuarios.Count() + 1;
+
+                var usuario = new Usuario
+                {
+                    Id = model.Id.Value,
+                    Username = model.Username,
+                };
 
                 // Criptografar a senha em SHA1 (256bits)
                 using (var sha1_256bits = System.Security.Cryptography.SHA1.Create())
