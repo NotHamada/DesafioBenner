@@ -11,7 +11,7 @@ let instructions = '';
 // Função que faz as predefinições
 function setPredefinition(predifinition) {
     switch (predifinition) {
-        case 1: 
+        case 1:
             timer = 180;
             power = 7;
             symbol = 'P';
@@ -50,7 +50,7 @@ function setPredefinition(predifinition) {
     document.getElementById('instructions').textContent = instructions;
     document.getElementById('timeInput').setAttribute('style', 'pointer-events: none; background-color: #808080');
     document.getElementById('powerInput').setAttribute('style', 'pointer-events: none; background-color: #808080');
-    
+
     isPredefinition = true;
 }
 
@@ -158,7 +158,7 @@ function pauseOrCancel() {
         document.getElementById('timeInput').setAttribute('style', '');
         document.getElementById('powerInput').setAttribute('style', '');
         symbol = '.'
-        
+
         return;
     }
 
@@ -187,4 +187,24 @@ function stopHeating() {
     clearInterval(progressInterval);
     isHeating = false;
     isPaused = false;
+}
+
+function fazerLogin() {
+
+    $.ajax({
+        url: '/api/Account/Login',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            username: "admin",
+            password: "123456"
+        }),
+        success: function (response) {
+            localStorage.setItem('jwt', response.token);
+            console.log('Login successful:', response.token);
+        },
+        error: function (error) {
+            console.error('Erro no login:', error);
+        }
+    });
 }

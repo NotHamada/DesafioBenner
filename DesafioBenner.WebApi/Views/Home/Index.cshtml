@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Microondas";
+}
+
+@section scripts
+{
+    <script src="../../Scripts/module.js"></script>
+}
+
+<div class="container-fluid">
+    <h1 class="text-center" id="display">
+        00:00
+    </h1>
+
+    <div class="row my-3" style="justify-content: space-between; display: flex">
+        <button class="col-md-2 btn btn-primary" onclick="setPredefinition(1)">Pipoca</button>
+        <button class="col-md-2 btn btn-primary" onclick="setPredefinition(2)">Leite</button>
+        <button class="col-md-2 btn btn-primary" onclick="setPredefinition(3)">Carnes de boi</button>
+        <button class="col-md-2 btn btn-primary" onclick="setPredefinition(4)">Frango</button>
+        <button class="col-md-2 btn btn-primary" onclick="setPredefinition(5)">Feijão</button>
+    </div>
+
+    <div class="row bg-warning text-center mb-3">
+        <h3 class="instructions" id="instructions" style="display: none;"></h3>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="timeInput">Tempo (segundos):</label>
+            <input class="form-control" type="number" id="timeInput" min="1" max="120">
+        </div>
+        <div class="col-md-6">
+            <label for="powerInput">Potência (1-10):</label>
+            <input class="form-control" type="number" id="powerInput" min="1" max="10" value="10">
+        </div>
+    </div>
+
+    <div class="row my-3 justify-content-between">
+        <button class="col-md-3 btn btn-success" onclick="addNumber(1)">1</button>
+        <button class="col-md-3 btn btn-success" onclick="addNumber(2)">2</button>
+        <button class="col-md-3 btn btn-success" onclick="addNumber(3)">3</button>
+    </div>
+    <div class="row my-3 justify-content-between">
+        <button class="col-md-3 btn btn-success" onclick="addNumber(4)">4</button>
+        <button class="col-md-3 btn btn-success" onclick="addNumber(5)">5</button>
+        <button class="col-md-3 btn btn-success" onclick="addNumber(6)">6</button>
+    </div>
+    <div class="row my-3 justify-content-between">
+        <button class="col-md-3 btn btn-success" onclick="addNumber(7)">7</button>
+        <button class="col-md-3 btn btn-success" onclick="addNumber(8)">8</button>
+        <button class="col-md-3 btn btn-success" onclick="addNumber(9)">9</button>
+    </div>
+    <div class="row my-3 justify-content-between">
+        <button class="col-md-3 btn btn-success" onclick="clearInput()">C</button>
+        <button class="col-md-3 btn btn-success" onclick="addNumber(0)">0</button>
+        <button class="col-md-3 btn btn-success" onclick="startHeating()">Iniciar</button>
+    </div>
+
+    <div class="row">
+        <button onclick="quickStart()" class="col-md-12 btn btn-success">Início Rápido</button>
+        <button class="col-md-12 btn btn-danger mt-3" onclick="pauseOrCancel()">Pausar/Cancelar</button>
+    </div>
+
+    <div class="heating-progress" id="heatingProgress"></div>
+    <div class="status" id="status"></div>
+
+    <div>
+        <input id="username" />
+        <input id="password" />
+        <button onclick="fazerLogin()">Clicar</button>
+    </div>
+</div>
