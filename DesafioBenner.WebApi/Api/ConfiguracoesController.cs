@@ -1,13 +1,17 @@
 ﻿using DesafioBenner.Context;
 using DesafioBenner.Domain.Configuracoes;
 using DesafioBenner.WebApi.Models;
+using Microsoft.Ajax.Utilities;
 using System.Linq;
 using System.Web.Http;
 
 namespace DesafioBenner.WebApi.Api
 {
+    [Authorize]
     public class ConfiguracoesController : ApiController
     {
+        private string[] symbols = new string[] { "P", ".", "Fr", "Fe", "L" };
+
         private readonly DesafioContext db = new DesafioContext();
 
         // GET api/configuracoes
@@ -39,7 +43,7 @@ namespace DesafioBenner.WebApi.Api
             }
 
             // Verificar se o símbolo já existe
-            if (db.Configuracoes.Any(c => c.Symbol == model.Symbol))
+            if (db.Configuracoes.Any(c => c.Symbol == model.Symbol) || symbols.Any(c => c == model.Symbol))
             {
                 return BadRequest("Símbolo já existe.");
             }

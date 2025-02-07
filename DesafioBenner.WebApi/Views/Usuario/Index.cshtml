@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Usuário";
+    Layout = "";
+}
+
+@section scripts{
+    <script src="~/Scripts/Usuario/module.js"></script>
+}
+<div class="row justify-content-center">
+    <input class="form-control" type="text" id="nome" placeholder="Nome" required>
+    <input class="form-control" type="password" id="senha" placeholder="Senha" required>
+    <button type="button" class="btn btn-success" onclick="criarUsuario()">Cadastrar</button>
+</div>

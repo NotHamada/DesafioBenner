@@ -4,15 +4,24 @@ function getUsuario(id) {
         type: 'GET',
         success: function (usuario) {
             console.log('Usuário:', usuario);
-            // Faça algo com o usuário retornado
+            location.href = "Home/Index"
         },
         error: function (xhr, status, error) {
             console.log('Erro ao obter usuário:', error);
+            location.href = "Home/Index"
         }
     });
 }
 
-function criarUsuario(usuario) {
+function criarUsuario() {
+    var nome = document.getElementById("nome").value;
+    var senha = document.getElementById("senha").value;
+
+    let usuario = {
+        Username: nome,
+        Password: senha
+    }
+
     $.ajax({
         url: '/api/values',
         type: 'POST',
@@ -20,10 +29,11 @@ function criarUsuario(usuario) {
         contentType: 'application/json',
         success: function (usuarioCriado) {
             console.log('Usuário criado:', usuarioCriado);
-            // Faça algo com o usuário criado
+            location.href = "Home/Index"
         },
         error: function (xhr, status, error) {
             console.log('Erro ao criar usuário:', error);
+            location.href = "Home/Index"
         }
     });
 }
@@ -34,10 +44,11 @@ function excluirUsuario(id) {
         type: 'DELETE',
         success: function () {
             console.log('Usuário excluído com sucesso');
-            // Faça algo após a exclusão do usuário
+            location.href = "Home/Index"
         },
         error: function (xhr, status, error) {
             console.log('Erro ao excluir usuário:', error);
+            location.href = "Home/Index"
         }
     });
 }

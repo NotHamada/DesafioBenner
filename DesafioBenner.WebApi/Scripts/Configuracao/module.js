@@ -12,7 +12,19 @@ function getConfiguracao(id) {
     });
 }
 
-function criarConfiguracao(configuracao) {
+function criarConfiguracao() {
+    var time = document.getElementById("time").value;
+    var power = document.getElementById("power").value;
+    var name = document.getElementById("name").value;
+    var symbol = document.getElementById("symbol").value;
+
+    let configuracao = {
+        Time: time,
+        Power: power,
+        Name: name,
+        Symbol: symbol
+    }
+
     $.ajax({
         url: '/api/configuracoes',
         type: 'POST',
